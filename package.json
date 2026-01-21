@@ -1,5 +1,5 @@
 {
-  "name": "@langchain/langgraph-checkpoint-neo4j",
+  "name": "@othmanadi/langgraph-checkpoint-neo4j",
   "version": "0.1.0",
   "description": "Neo4j checkpoint saver for LangGraph.js with branching time-travel support",
   "type": "module",
@@ -43,7 +43,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/langgraph-checkpoint-neo4j-js"
+    "url": "https://github.com/OthmanAdi/langgraph-checkpoint-neo4j-js"
   },
   "dependencies": {
     "@langchain/langgraph-checkpoint": "^0.0.17",

@@ -2,7 +2,7 @@
 
 > A TypeScript implementation of persistent checkpoint storage for LangGraph agents using Neo4j's graph database.
 
-[![npm version](https://img.shields.io/npm/v/@langchain/langgraph-checkpoint-neo4j.svg)](https://www.npmjs.com/package/@langchain/langgraph-checkpoint-neo4j)
+[![npm version](https://img.shields.io/npm/v/@othmanadi/langgraph-checkpoint-neo4j.svg)](https://www.npmjs.com/package/@othmanadi/langgraph-checkpoint-neo4j)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## What is this?
@@ -26,15 +26,15 @@ If you're already using Neo4j in your stack, this gives you:
 ## Installation
 
 ```bash
-npm install @langchain/langgraph-checkpoint-neo4j neo4j-driver
+npm install @othmanadi/langgraph-checkpoint-neo4j neo4j-driver
 # or
-bun add @langchain/langgraph-checkpoint-neo4j neo4j-driver
+bun add @othmanadi/langgraph-checkpoint-neo4j neo4j-driver
 ```
 
 ## Quick Start
 
 ```typescript
-import { Neo4jSaver } from "@langchain/langgraph-checkpoint-neo4j";
+import { Neo4jSaver } from "@othmanadi/langgraph-checkpoint-neo4j";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
 // Create checkpointer
