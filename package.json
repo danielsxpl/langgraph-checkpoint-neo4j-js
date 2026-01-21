@@ -1,0 +1,68 @@
+{
+  "name": "@langchain/langgraph-checkpoint-neo4j",
+  "version": "0.1.0",
+  "description": "Neo4j checkpoint saver for LangGraph.js with branching time-travel support",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "bun x tsc",
+    "build:watch": "bun x tsc --watch",
+    "clean": "rimraf dist",
+    "lint": "bun x eslint src --ext .ts",
+    "lint:fix": "bun x eslint src --ext .ts --fix",
+    "format": "bun x prettier --write src/**/*.ts",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "langchain",
+    "langgraph",
+    "checkpoint",
+    "neo4j",
+    "graph-database",
+    "persistence",
+    "memory",
+    "ai",
+    "llm"
+  ],
+  "author": "Ahmad Othman Adi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/langgraph-checkpoint-neo4j-js"
+  },
+  "dependencies": {
+    "@langchain/langgraph-checkpoint": "^0.0.17",
+    "neo4j-driver": "^5.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0",
+    "rimraf": "^5.0.5",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "prettier": "^3.2.4"
+  },
+  "peerDependencies": {
+    "@langchain/core": ">=0.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
