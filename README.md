@@ -1,20 +1,34 @@
-# @langchain/langgraph-checkpoint-neo4j
+# Neo4j Checkpoint Saver for LangGraph.js
 
-Neo4j checkpoint saver for LangGraph.js with branching time-travel support.
+> A TypeScript implementation of persistent checkpoint storage for LangGraph agents using Neo4j's graph database.
 
-This is a TypeScript port of the [langchain-neo4j](https://github.com/langchain-ai/langchain-neo4j) Python package's checkpoint saver.
+[![npm version](https://img.shields.io/npm/v/@langchain/langgraph-checkpoint-neo4j.svg)](https://www.npmjs.com/package/@langchain/langgraph-checkpoint-neo4j)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+## What is this?
 
-- **Persistent Agent Memory**: Store and retrieve LangGraph checkpoints in Neo4j
-- **Graph-Native Data Model**: Leverages Neo4j relationships for efficient traversal
-- **Branching Time-Travel**: Fork conversations from any checkpoint without losing history
-- **Full TypeScript Support**: Complete type definitions included
+This package lets your LangGraph agents remember conversations across restarts by storing their state in Neo4j. It's a **TypeScript port** of the Python [langchain-neo4j](https://github.com/langchain-ai/langchain-neo4j) checkpoint saver.
+
+**Key Features:**
+- 💾 Persistent agent memory in Neo4j
+- 🌳 Graph-native storage using relationships
+- 🔀 Branching conversations (time-travel support)
+- 📦 Drop-in replacement for other checkpointers
+- 🎯 Full TypeScript support
+
+## Why Neo4j?
+
+If you're already using Neo4j in your stack, this gives you:
+- **One less database** to manage
+- **Visual debugging** - see conversation flow in Neo4j Browser
+- **Powerful queries** - leverage Cypher to analyze agent behavior
 
 ## Installation
 
 ```bash
 npm install @langchain/langgraph-checkpoint-neo4j neo4j-driver
+# or
+bun add @langchain/langgraph-checkpoint-neo4j neo4j-driver
 ```
 
 ## Quick Start
@@ -27,114 +41,106 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 const checkpointer = Neo4jSaver.fromConnString({
   uri: "bolt://localhost:7687",
   user: "neo4j",
-  password: "password",
+  password: "your-password",
 });
 
-// Setup indexes (run once)
+// Run setup once (creates indexes)
 await checkpointer.setup();
 
-// Use with LangGraph
-const graph = createReactAgent({
-  llm: model,
-  tools: [tool1, tool2],
-}).compile({
-  checkpointer,
-});
+// Use with your agent
+const agent = createReactAgent({
+  llm: yourModel,
+  tools: yourTools,
+}).compile({ checkpointer });
 
-// Run with thread_id for persistence
-const config = { configurable: { thread_id: "my-conversation" } };
-const result = await graph.invoke({ messages: [["user", "Hello!"]] }, config);
+// Conversations now persist!
+const config = { configurable: { thread_id: "user-123" } };
+await agent.invoke({ messages: [["user", "Hello!"]] }, config);
 
-// Continue conversation (state is automatically restored)
-const result2 = await graph.invoke(
-  { messages: [["user", "What did I just say?"]] },
-  config
-);
+// Later (even after restart), state is restored
+await agent.invoke({ messages: [["user", "What did I say?"]] }, config);
 
 // Cleanup when done
 await checkpointer.close();
 ```
 
-## Neo4j Graph Data Model
+## How It Works
 
-The checkpointer uses a graph model with nodes and relationships:
+Checkpoints are stored as a graph:
 
 ```
-                         ┌─────────────────────────────────────┐
-                         │                                     │
-                         ▼                                     │
-(:Thread)──[HAS_CHECKPOINT]──►(:Checkpoint)──[PREVIOUS]────────┘
-    │                              │
-    │                    ┌─────────┼─────────┐
-    │                    │         │         │
-    ▼                    ▼         ▼         ▼
-[HAS_BRANCH]       [HAS_CHANNEL] [HAS_WRITE] [ON_BRANCH]
-    │                    │         │         │
-    ▼                    ▼         ▼         │
-(:Branch)◄────────(:ChannelState) (:PendingWrite)
-    │                                        │
-    └────────────[HEAD]──────────────────────┘
+(:Thread)─[:HAS_CHECKPOINT]→(:Checkpoint)─[:PREVIOUS]→(:Checkpoint)
+    │                           │
+    └─[:HAS_BRANCH]→(:Branch)   ├─[:HAS_CHANNEL]→(:ChannelState)
+                                └─[:HAS_WRITE]→(:PendingWrite)
 ```
 
-### Node Types
+Each conversation thread has checkpoints linked in a chain. Branches enable "time-travel" - fork from any point without losing history.
 
-| Node | Description | Key Properties |
-|------|-------------|----------------|
-| `Thread` | Conversation thread | `thread_id`, `checkpoint_ns` |
-| `Checkpoint` | Point-in-time state | `checkpoint_id`, `checkpoint`, `metadata`, `created_at` |
-| `ChannelState` | Channel value storage | `channel`, `version`, `type`, `blob` |
-| `PendingWrite` | Fault-tolerant writes | `task_id`, `channel`, `blob`, `idx` |
-| `Branch` | Conversation branch | `branch_id`, `name`, `fork_point_id`, `created_at` |
+## Documentation
 
-## API Reference
-
-### `Neo4jSaver`
-
-Main class for checkpoint persistence.
-
-#### `Neo4jSaver.fromConnString(config)`
-
-Create a checkpointer from connection parameters.
-
-```typescript
-const checkpointer = Neo4jSaver.fromConnString({
-  uri: "bolt://localhost:7687",
-  user: "neo4j",
-  password: "password",
-  database: "neo4j", // optional
-});
-```
-
-#### `checkpointer.setup()`
-
-Create indexes and constraints. Call once before using.
-
-```typescript
-await checkpointer.setup();
-```
-
-#### `checkpointer.close()`
-
-Close the Neo4j connection when done.
-
-```typescript
-await checkpointer.close();
-```
+- [API Reference](./docs/api.md) (coming soon)
+- [Graph Model Details](./docs/graph-model.md) (coming soon)
+- [Migration Guide](./docs/migration.md) (coming soon)
 
 ## Requirements
 
-- Node.js >= 18.0.0
-- Neo4j >= 5.0
-- @langchain/langgraph-checkpoint >= 0.0.17
+- Node.js ≥ 18
+- Neo4j ≥ 5.0
+- @langchain/langgraph-checkpoint ≥ 0.0.17
 
-## License
+## Project Status
 
-MIT
+**Early Release** - This is a working port of the Python implementation, but:
+- ✅ Core functionality complete
+- ✅ TypeScript definitions included
+- ⚠️ Tests are minimal (help wanted!)
+- ⚠️ Not yet battle-tested in production
 
-## Author
+**We welcome contributors!** See [CONTRIBUTING.md](./CONTRIBUTING.md) for ways to help.
 
-Ahmad Othman Adi
+## Roadmap
+
+- [ ] Comprehensive test suite
+- [ ] Performance benchmarks vs SQLite/Postgres
+- [ ] Example apps
+- [ ] Async batch operations
+- [ ] Migration tools from other checkpointers
+
+## Comparison with Other Checkpointers
+
+| Feature | Neo4j | SQLite | Postgres | Redis |
+|---------|-------|--------|----------|-------|
+| Persistent | ✅ | ✅ | ✅ | ⚠️ (if configured) |
+| Branching | ✅ | ❌ | ❌ | ❌ |
+| Visual Debug | ✅ | ❌ | ❌ | ❌ |
+| Setup Complexity | Medium | Low | Medium | Low |
+| Best For | Graph-heavy apps | Simple apps | Enterprise | High-speed cache |
+
+## Contributing
+
+We're actively looking for contributors! Ways to help:
+
+1. **Test in your project** - Report issues
+2. **Add tests** - Especially integration tests
+3. **Write examples** - Show real-world usage
+4. **Improve docs** - Clarify confusing parts
+5. **Optimize performance** - Benchmark and improve
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ## Acknowledgments
 
-This project is a TypeScript port of the Neo4j checkpoint saver from [langchain-neo4j](https://github.com/langchain-ai/langchain-neo4j) by LangChain, Inc.
+This project is a TypeScript port of [langchain-neo4j](https://github.com/langchain-ai/langchain-neo4j) by LangChain, Inc. We're grateful for their excellent Python implementation that made this port possible.
+
+## License
+
+MIT © Ahmad Othman Adi
+
+---
+
+**Questions?** Open a [Discussion](../../discussions) 💬
+
+**Found a bug?** Create an [Issue](../../issues) 🐛
+
+**Want to help?** Check [Good First Issues](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) 🌟
